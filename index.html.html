@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jacob R. Machen - Systems Administrator</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-dark: #0f1729;
+    --bg-card: #172039;
+    --bg-light: #f7f8fc;
+    --accent: #4f8ff7;
+    --accent-glow: rgba(79, 143, 247, 0.15);
+    --text-primary: #e8ecf4;
+    --text-secondary: #8892a8;
+    --text-dark: #1a2038;
+    --text-dark-secondary: #5a6478;
+    --border: rgba(255,255,255,0.06);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 16px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(15, 23, 41, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono); font-size: 14px; font-weight: 500;
+    color: var(--accent); letter-spacing: 1px;
+  }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    color: var(--text-secondary); text-decoration: none;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.5px;
+    text-transform: uppercase; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 120px 40px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { max-width: 720px; position: relative; z-index: 1; }
+
+  .hero-terminal {
+    font-family: var(--mono); font-size: 13px; color: var(--text-secondary);
+    margin-bottom: 24px; display: flex; align-items: center; gap: 8px;
+  }
+  .hero-terminal .cursor {
+    display: inline-block; width: 8px; height: 16px;
+    background: var(--accent); animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 64px); font-weight: 700;
+    line-height: 1.1; margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-subtitle {
+    font-size: 20px; color: var(--text-secondary);
+    font-weight: 300; margin-bottom: 32px; max-width: 560px;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px; border-radius: 8px;
+    background: var(--accent); color: #fff; font-weight: 600;
+    font-size: 14px; text-decoration: none; transition: all 0.3s;
+    border: none; cursor: pointer;
+  }
+  .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(79,143,247,0.3); }
+
+  /* ── SECTIONS ── */
+  section { padding: 80px 40px; }
+
+  .section-label {
+    font-family: var(--mono); font-size: 12px; font-weight: 500;
+    color: var(--accent); text-transform: uppercase;
+    letter-spacing: 2px; margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 32px; font-weight: 700; margin-bottom: 48px;
+    color: var(--text-primary);
+  }
+
+  /* ── ABOUT ── */
+  .about { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .about-content { max-width: 900px; margin: 0 auto; }
+  .about p {
+    font-size: 17px; color: var(--text-secondary);
+    line-height: 1.8; max-width: 680px;
+  }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 24px; margin-top: 40px;
+  }
+  .stat {
+    padding: 24px; border-radius: 12px;
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  }
+  .stat-number {
+    font-size: 28px; font-weight: 700; color: var(--accent);
+    font-family: var(--mono);
+  }
+  .stat-label {
+    font-size: 13px; color: var(--text-secondary);
+    margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  /* ── SKILLS ── */
+  .skills-content { max-width: 900px; margin: 0 auto; }
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .skill-card {
+    padding: 28px; border-radius: 12px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .skill-card-icon {
+    font-size: 24px; margin-bottom: 16px;
+    width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+    background: var(--accent-glow); border-radius: 10px;
+  }
+  .skill-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tag {
+    font-size: 12px; font-family: var(--mono); padding: 4px 10px;
+    border-radius: 4px; background: rgba(79,143,247,0.08);
+    color: var(--accent); border: 1px solid rgba(79,143,247,0.15);
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .experience-content { max-width: 900px; margin: 0 auto; }
+
+  .timeline { position: relative; }
+  .timeline::before {
+    content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
+    width: 2px; background: var(--border);
+  }
+  .timeline-item {
+    padding-left: 36px; margin-bottom: 48px;
+    position: relative;
+  }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-dot {
+    position: absolute; left: -5px; top: 8px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--bg-dark); border: 2px solid var(--accent);
+  }
+  .timeline-item.current .timeline-dot {
+    background: var(--accent);
+    box-shadow: 0 0 12px rgba(79,143,247,0.5);
+  }
+  .timeline-date {
+    font-family: var(--mono); font-size: 12px;
+    color: var(--accent); margin-bottom: 6px;
+  }
+  .timeline-role { font-size: 18px; font-weight: 600; margin-bottom: 2px; }
+  .timeline-company { font-size: 14px; color: var(--text-secondary); margin-bottom: 14px; }
+  .timeline-bullets { list-style: none; }
+  .timeline-bullets li {
+    font-size: 14px; color: var(--text-secondary);
+    padding: 4px 0 4px 16px; position: relative; line-height: 1.6;
+  }
+  .timeline-bullets li::before {
+    content: ''; position: absolute; left: 0; top: 12px;
+    width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(79,143,247,0.4);
+  }
+
+  /* ── EDUCATION ── */
+  .education-content { max-width: 900px; margin: 0 auto; }
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .edu-card {
+    padding: 28px; border-radius: 12px;
+    background: var(--bg-card); border: 1px solid var(--border);
+  }
+  .edu-year {
+    font-family: var(--mono); font-size: 12px; color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .edu-degree { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .edu-school { font-size: 14px; color: var(--text-secondary); }
+  .edu-gpa { font-size: 13px; color: var(--text-secondary); margin-top: 8px; font-family: var(--mono); }
+
+  /* ── CONTACT ── */
+  .contact {
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .contact-content { max-width: 600px; margin: 0 auto; }
+  .contact p { font-size: 17px; color: var(--text-secondary); margin-bottom: 32px; line-height: 1.7; }
+  .contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px; border-radius: 8px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    color: var(--text-primary); text-decoration: none;
+    font-size: 14px; font-weight: 500; transition: all 0.3s;
+  }
+  .contact-link:hover {
+    border-color: var(--accent); background: var(--accent-glow);
+    color: var(--accent);
+  }
+
+  footer {
+    padding: 24px 40px; text-align: center;
+    font-size: 12px; color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 11px; }
+    section { padding: 60px 20px; }
+    .hero { padding: 100px 20px 60px; }
+    .hero h1 { font-size: 36px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">jmachen:~$</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-terminal">
+      <span>~/career $</span> whoami <span class="cursor"></span>
+    </div>
+    <h1>Jacob R. Machen</h1>
+    <p class="hero-subtitle">
+      Systems Administrator building reliable infrastructure for teams that depend on it. Azure, Active Directory, PowerShell, and whatever else the ticket says.
+    </p>
+    <a href="#contact" class="hero-cta">Get in Touch &darr;</a>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="about-content">
+    <div class="section-label">About</div>
+    <div class="section-title">The Short Version</div>
+    <p>
+      I keep systems running and people productive. From managing Fortinet firewalls and Azure cloud resources to automating Active Directory with PowerShell, I work across the full stack of enterprise IT. My background spans healthcare and automotive manufacturing, so I know what it means when downtime isn't an option.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-number">2.5+</div>
+        <div class="stat-label">Years in IT</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">3</div>
+        <div class="stat-label">ITSM Platforms</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">B.A.</div>
+        <div class="stat-label">Computer Info Systems</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">Net+</div>
+        <div class="stat-label">CompTIA Trained</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="skills" id="skills">
+  <div class="skills-content">
+    <div class="section-label">Technical Skills</div>
+    <div class="section-title">What I Work With</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-icon">&#9729;</div>
+        <h3>Cloud & Identity</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Azure</span>
+          <span class="skill-tag">AWS EC2</span>
+          <span class="skill-tag">Entra ID</span>
+          <span class="skill-tag">RBAC</span>
+          <span class="skill-tag">Conditional Access</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">&#9881;</div>
+        <h3>Systems & Endpoint</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Active Directory</span>
+          <span class="skill-tag">Group Policy</span>
+          <span class="skill-tag">Intune</span>
+          <span class="skill-tag">SCCM/MDT</span>
+          <span class="skill-tag">Windows Server</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">&#9783;</div>
+        <h3>Networking & Security</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Fortinet</span>
+          <span class="skill-tag">VPN</span>
+          <span class="skill-tag">TCP/IP</span>
+          <span class="skill-tag">DNS</span>
+          <span class="skill-tag">DHCP</span>
+          <span class="skill-tag">VLAN</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">&#9889;</div>
+        <h3>ITSM & Automation</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">ServiceNow</span>
+          <span class="skill-tag">BMC Remedy</span>
+          <span class="skill-tag">PowerShell</span>
+          <span class="skill-tag">CMDB</span>
+          <span class="skill-tag">PRIMA</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">&#9874;</div>
+        <h3>Platforms & Tools</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Microsoft 365</span>
+          <span class="skill-tag">Exchange</span>
+          <span class="skill-tag">SharePoint</span>
+          <span class="skill-tag">Teams</span>
+          <span class="skill-tag">OS Imaging</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">&lt;/&gt;</div>
+        <h3>Programming</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">PowerShell</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">C++</span>
+          <span class="skill-tag">Java</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="experience" id="experience">
+  <div class="experience-content">
+    <div class="section-label">Experience</div>
+    <div class="section-title">Where I've Been</div>
+    <div class="timeline">
+
+      <div class="timeline-item current">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">March 2025 &mdash; Present</div>
+        <div class="timeline-role">IT Support Specialist / Systems Engineer</div>
+        <div class="timeline-company">OB Hospitalist Group &middot; Greenville, SC</div>
+        <ul class="timeline-bullets">
+          <li>Administer and configure ServiceNow at the global level including workflow automation, incident management, and service catalog development</li>
+          <li>Manage Fortinet network infrastructure with firewall policies and VPN configurations across distributed sites</li>
+          <li>Provision and maintain Azure cloud resources including identity management and RBAC</li>
+          <li>Engineer Microsoft Intune device and application deployment policies for endpoint compliance across a distributed workforce</li>
+          <li>Develop PowerShell scripts to automate Active Directory provisioning, group policy management, and routine admin tasks</li>
+          <li>Diagnose and resolve complex Microsoft 365 issues spanning Exchange Online, SharePoint, Teams, and Entra ID</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">January 2024 &mdash; March 2025</div>
+        <div class="timeline-role">Computer Technician</div>
+        <div class="timeline-company">BMW Group &middot; Greer, SC</div>
+        <ul class="timeline-bullets">
+          <li>Resolved complex incidents and escalations across BMC Remedy, ServiceNow, and PRIMA while maintaining SLA compliance</li>
+          <li>Managed full endpoint lifecycle including provisioning, MDM (Intune), inventory tracking, and desktop support</li>
+          <li>Diagnosed network issues involving TCP/IP, DNS, DHCP, VPN, and VLAN configurations</li>
+          <li>Built and maintained standardized Windows OS images and deployment task sequences using SCCM/MDT</li>
+          <li>Automated administrative tasks with PowerShell and managed Active Directory accounts, security groups, and GPOs</li>
+          <li>Maintained CMDB records to support change management and IT asset tracking</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">June 2023 &mdash; January 2024</div>
+        <div class="timeline-role">Help Desk / Hardware Technician</div>
+        <div class="timeline-company">IT Help Desk Upstate &middot; Spartanburg, SC</div>
+        <ul class="timeline-bullets">
+          <li>First point of contact for technical support via phone, email, and SharePoint ticketing</li>
+          <li>Remote troubleshooting with diagnostic tools and guided end-user resolution</li>
+          <li>Managed user accounts and permissions in Active Directory and supported Azure resource provisioning</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="education" id="education">
+  <div class="education-content">
+    <div class="section-label">Education & Training</div>
+    <div class="section-title">Background</div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-year">December 2023</div>
+        <div class="edu-degree">B.A. in Computer Information Systems</div>
+        <div class="edu-school">University of South Carolina Upstate</div>
+        <div class="edu-gpa">GPA: 3.2</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-year">May 2021</div>
+        <div class="edu-degree">Associate of Arts</div>
+        <div class="edu-school">University of South Carolina Union</div>
+        <div class="edu-gpa">GPA: 3.2</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-year">August 2024</div>
+        <div class="edu-degree">CompTIA Network+ (N10-009)</div>
+        <div class="edu-school">Full Course & Practice Exam, Udemy</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-content">
+    <div class="section-label">Contact</div>
+    <div class="section-title">Let's Connect</div>
+    <p>Open to Systems Administrator II opportunities. If you're building something that needs reliable infrastructure behind it, I'd like to hear about it.</p>
+    <div class="contact-links">
+      <a href="mailto:Jacobmachen7@gmail.com" class="contact-link">&#9993; Jacobmachen7@gmail.com</a>
+      <a href="tel:8646176926" class="contact-link">&#9742; (864) 617-6926</a>
+      <a href="https://jmachen5.wixsite.com/jmresume" target="_blank" class="contact-link">&#9741; Portfolio</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 Jacob R. Machen
+</footer>
+
+</body>
+</html>
